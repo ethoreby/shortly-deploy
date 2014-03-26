@@ -3,6 +3,16 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        // define a string to put between each file in the concatenated output
+        separator: ';'
+      },
+      dist: {
+        // the files to concatenate
+        src: ['public/client/**/*.js', 'public/lib/**/*.js'],
+        // the location of the resulting JS file
+        dest: 'dist/concatFiles.js'
+      }
     },
 
     mochaTest: {
@@ -21,6 +31,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target: {
+        files: {
+          'dest/concatFiles.min.js': ['dist/concatFiles.js']
+        }
+      }
     },
 
     jshint: {
@@ -94,6 +109,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -107,6 +124,5 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', [
     // add your deploy tasks here
   ]);
-
 
 };
