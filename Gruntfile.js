@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         // the files to concatenate
         src: ['public/client/**/*.js', 'public/lib/**/*.js'],
         // the location of the resulting JS file
-        dest: 'dist/concatFiles.js'
+        dest: 'public/dist/concatFiles.js'
       }
     },
 
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [
-        // Add filespec list here
+        'public/**/*.js'
       ],
       options: {
         force: 'true',
@@ -105,7 +105,8 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest',
+    'jshint'
   ]);
 
   grunt.registerTask('build', [
