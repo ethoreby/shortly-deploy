@@ -10,6 +10,30 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
+User.on('creating', function(err, thisUser) {
+  console.log("creating------------------------------", thisUser.username);
+});
+
+/*
+See:
+
+hooks.js
+Example
+
+var toySchema = new Schema(..);
+
+toySchema.pre('save', function (next) {
+  if (!this.created) this.created = new Date;
+  next();
+})
+
+toySchema.pre('validate', function (next) {
+  if (this.name != 'Woody') this.name = 'Woody';
+  next();
+})
+*/
+
+
 //  ({
 //   tableName: 'users',
 //   hasTimestamps: true,
