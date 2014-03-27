@@ -8,50 +8,18 @@ var userSchema = mongoose.Schema({
   password: String
 });
 
-var User = mongoose.model('User', userSchema);
-
-User.on('creating', function(err, thisUser) {
-  console.log("creating------------------------------", thisUser.username);
+userSchema.pre('save', function(next) {
+  var hash = bcrypt.hashSync(this.password);
+  this.password = hash;
+  next();
 });
 
-/*
-See:
+userSchema.methods.compareHash = function(attPassword, callback) {
+  bcrypt.compare(attPassword, this.password, function(err, isMatch) {
+    callback(isMatch);
+  });
+};
 
-hooks.js
-Example
-
-var toySchema = new Schema(..);
-
-toySchema.pre('save', function (next) {
-  if (!this.created) this.created = new Date;
-  next();
-})
-
-toySchema.pre('validate', function (next) {
-  if (this.name != 'Woody') this.name = 'Woody';
-  next();
-})
-*/
-
-
-//  ({
-//   tableName: 'users',
-//   hasTimestamps: true,
-//   initialize: function(){
-//     this.on('creating', this.hashPassword);
-//   },
-//   comparePassword: function(attemptedPassword, callback) {
-//     bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
-//       callback(isMatch);
-//     });
-//   },
-//   hashPassword: function(){
-//     var cipher = Promise.promisify(bcrypt.hash);
-//     return cipher(this.get('password'), null, null).bind(this)
-//       .then(function(hash) {
-//         this.set('password', hash);
-//       });
-//   }
-// });
+var User = mongoose.model('User', userSchema);
 
 module.exports = User;
