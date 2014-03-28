@@ -10,7 +10,6 @@ module.exports = function(grunt) {
       dist: {
         // the files to concatenate
         files: {
-          'public/dist/minLib.js': ['public/lib/**/*.js'],
           'public/dist/minClient.js': ['public/client/**/*.js']
         }
       }
@@ -34,7 +33,11 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'public/dist/minLib.js': ['public/dist/minLib.js'],
+          'public/dist/jquery.min.js': ['public/lib/jquery'],
+          'public/dist/backbone.min.js': ['public/lib/backbone'],
+          'public/dist/handlebars.min.js': ['public/lib/handlebars'],
+          'public/dist/underscore.min.js': ['public/lib/underscore'],
+
           'public/dist/minClient.js': ['public/dist/minClient.js']
         }
       }
