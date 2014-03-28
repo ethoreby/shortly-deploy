@@ -9,9 +9,10 @@ module.exports = function(grunt) {
       },
       dist: {
         // the files to concatenate
-        src: ['public/client/**/*.js', 'public/lib/**/*.js'],
-        // the location of the resulting JS file
-        dest: 'public/dist/concatFiles.js'
+        files: {
+          'public/dist/minLib.js': ['public/lib/**/*.js'],
+          'public/dist/minClient.js': ['public/client/**/*.js']
+        }
       }
     },
 
@@ -33,7 +34,8 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'dest/concatFiles.min.js': ['dist/concatFiles.js']
+          'public/dist/minLib.js': ['public/dist/minLib.js'],
+          'public/dist/minClient.js': ['public/dist/minClient.js']
         }
       }
     },
@@ -53,6 +55,13 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      minify: {
+        expand: true,
+        cwd: 'dest/css/',
+        src: ['*.css', '!*.min.css'],
+        dest: 'dest/css/',
+        ext: '.min.css'
+      }
     },
 
     watch: {
@@ -74,6 +83,10 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push azure master',
+        options: {
+          stdout: true
+        }
       }
     },
   });
@@ -111,12 +124,14 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'concat',
-    'uglify'
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      // grunt.shell'shell:prodServer'
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
