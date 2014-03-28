@@ -33,10 +33,10 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'public/dist/jquery.min.js': ['public/lib/jquery'],
-          'public/dist/backbone.min.js': ['public/lib/backbone'],
-          'public/dist/handlebars.min.js': ['public/lib/handlebars'],
-          'public/dist/underscore.min.js': ['public/lib/underscore'],
+          'public/dist/jquery.min.js': ['public/lib/jquery.js'],
+          'public/dist/backbone.min.js': ['public/lib/backbone.js'],
+          'public/dist/handlebars.min.js': ['public/lib/handlebars.js'],
+          'public/dist/underscore.min.js': ['public/lib/underscore.js'],
 
           'public/dist/minClient.js': ['public/dist/minClient.js']
         }
